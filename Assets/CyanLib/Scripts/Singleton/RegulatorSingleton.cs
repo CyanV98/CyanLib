@@ -1,22 +1,28 @@
 ﻿using UnityEngine;
 
-namespace CyanLib {
+namespace CyanLib
+{
     /// <summary>
-    /// Persistent Regulator singleton, will destroy any other older components of the same type it finds on awake
+    ///     Persistent Regulator singleton, will destroy any other older components of the same type it finds on awake
     /// </summary>
-    public class RegulatorSingleton<T> : MonoBehaviour where T : Component {
+    public class RegulatorSingleton<T> : MonoBehaviour where T : Component
+    {
         protected static T instance;
 
         public static bool HasInstance => instance != null;
 
         public float InitializationTime { get; private set; }
 
-        public static T Instance {
-            get {
-                if (instance == null) {
+        public static T Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
                     instance = FindAnyObjectByType<T>();
-                    if (instance == null) {
-                        var go = new GameObject(typeof(T).Name + " Auto-Generated");
+                    if (instance == null)
+                    {
+                        GameObject go = new(typeof(T).Name + " Auto-Generated");
                         go.hideFlags = HideFlags.HideAndDontSave;
                         instance = go.AddComponent<T>();
                     }
@@ -27,27 +33,25 @@ namespace CyanLib {
         }
 
         /// <summary>
-        /// Make sure to call base.Awake() in override if you need awake.
+        ///     Make sure to call base.Awake() in override if you need awake.
         /// </summary>
-        protected virtual void Awake() {
+        protected virtual void Awake()
+        {
             InitializeSingleton();
         }
 
-        protected virtual void InitializeSingleton() {
+        protected virtual void InitializeSingleton()
+        {
             if (!Application.isPlaying) return;
             InitializationTime = Time.time;
             DontDestroyOnLoad(gameObject);
 
             T[] oldInstances = FindObjectsByType<T>(FindObjectsSortMode.None);
-            foreach (T old in oldInstances) {
-                if (old.GetComponent<RegulatorSingleton<T>>().InitializationTime < InitializationTime) {
+            foreach (T old in oldInstances)
+                if (old.GetComponent<RegulatorSingleton<T>>().InitializationTime < InitializationTime)
                     Destroy(old.gameObject);
-                }
-            }
 
-            if (instance == null) {
-                instance = this as T;
-            }
+            if (instance == null) instance = this as T;
         }
     }
 }
