@@ -1,10 +1,11 @@
-﻿using UnityEngine;
-#if ENABLED_UNITY_URP
+﻿#if ENABLED_UNITY_URP
 using UnityEngine.Rendering;
 #endif
 
-namespace UnityUtils {
-    public static class ResourcesUtils {
+namespace UnityUtils
+{
+    public static class ResourcesUtils
+    {
 #if ENABLED_UNITY_URP
         /// <summary>
         /// Load volume profile from given path.

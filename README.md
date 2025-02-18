@@ -9,6 +9,7 @@ Basically, all Unity extensions here are forked from [adammyhre](https://github.
 - **Hotkeys:** Lock Inspector, Close Tab, Compile Project and more.
 - **Helpers:** Static helper methods such as NonAlloc WaitForSeconds.
 - **Singletons:** Generic Singletons for various use cases.
+- **Coordinates:** 2D and 3D representation of coordinates and directions. Can be used in grid systems.
 
 ## Dependencies
 
